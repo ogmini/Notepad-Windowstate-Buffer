@@ -1,0 +1,1 @@
+# Notepad-Windowstate-Buffer
