@@ -54,31 +54,83 @@ namespace Notepad_Windowstate_Buffer
                             c.AddBytes(sequenceNumber);
                             Console.WriteLine("Sequence Number: {0}", sequenceNumber.ToString());
 
-                            var un1 = reader.ReadBytes(19);
+                            var typeFlag = reader.ReadBytes(1);
+                            c.AddBytes(typeFlag);
+                            Console.WriteLine("Flag: {0}", BytestoString(typeFlag));
+
+                            var un1 = reader.ReadBytes(18);
                             c.AddBytes(un1);
                             Console.WriteLine("Unknown bytes - un1: {0}", BytestoString(un1));
 
-                            var chunk1 = reader.ReadBytes(4);
-                            c.AddBytes(chunk1);
-                            Console.WriteLine("Unknown bytes - chunk1: {0}", BytestoString(chunk1));
-                            var chunk2 = reader.ReadBytes(4);
-                            c.AddBytes(chunk2);
-                            Console.WriteLine("Unknown bytes - chunk2: {0}", BytestoString(chunk2));
-                            var chunk3 = reader.ReadBytes(4);
-                            c.AddBytes(chunk3);
-                            Console.WriteLine("Unknown bytes - chunk3: {0}", BytestoString(chunk3));
-                            var chunk4 = reader.ReadBytes(4);
-                            c.AddBytes(chunk4);
-                            Console.WriteLine("Unknown bytes - chunk4: {0}", BytestoString(chunk4));
-                            var chunk5 = reader.ReadBytes(4);
-                            c.AddBytes(chunk5);
-                            Console.WriteLine("Unknown bytes - chunk5: {0}", BytestoString(chunk5));
-                            var chunk6 = reader.ReadBytes(4);
-                            c.AddBytes(chunk6);
-                            Console.WriteLine("Unknown bytes - chunk6: {0}", BytestoString(chunk6));
+                            //var chunk1a = reader.ReadBytes(1);
+                            //c.AddBytes(chunk1a);
+                            //Console.WriteLine("Unknown bytes - chunk1a: {0}", BytestoString(chunk1a));
+                            //var coord1 = stream.ReadLEB128Unsigned(); 
+                            //c.AddBytes(coord1);
+                            //Console.WriteLine("coord1a {0}", coord1);
+                            ////var coord1b = stream.ReadLEB128Unsigned();
+                            ////c.AddBytes(coord1b);
+                            ////Console.WriteLine("coord1b {0}", coord1b);
+                            //var chunk1b = reader.ReadBytes(1);
+                            //c.AddBytes(chunk1b);
+                            //Console.WriteLine("Unknown bytes - chunk1b: {0}", BytestoString(chunk1b));
+
+                            //Bottom Left Coord
+                            Console.Write("First Coordinate: (");
+                            for (int x = 1; x < 3; x++) //we have 4 bytes here
+                            {
+                                var chunka = reader.ReadBytes(1);
+                                c.AddBytes(chunka);
+                                //Console.WriteLine("Unknown bytes - chunk-{0}-a: {1}", x, BytestoString(chunka));
+
+                                var coord = reader.ReadBytes(2);
+                                c.AddBytes(coord);
+                                Console.Write("{0}{1}", BitConverter.ToUInt16(coord, 0), x%2 == 0 ? "" : ", ");
+
+                                var chunkb = reader.ReadBytes(1);
+                                c.AddBytes(chunkb);
+                                //Console.WriteLine("Unknown bytes - chunk-{0}-b: {1}", x, BytestoString(chunkb));
+                            }
+
+                            //Top Right Coord
+                            Console.WriteLine(")");
+                            Console.Write("Second Coordinate: (");
+                            for (int x = 1; x < 3; x++) //we have 4 bytes here
+                            {
+                                var chunka = reader.ReadBytes(1);
+                                c.AddBytes(chunka);
+                                //Console.WriteLine("Unknown bytes - chunk-{0}-a: {1}", x, BytestoString(chunka));
+
+                                var coord = reader.ReadBytes(2);
+                                c.AddBytes(coord);
+                                Console.Write("{0}{1}", BitConverter.ToUInt16(coord, 0), x % 2 == 0 ? "" : ", ");
+
+                                var chunkb = reader.ReadBytes(1);
+                                c.AddBytes(chunkb);
+                                //Console.WriteLine("Unknown bytes - chunk-{0}-b: {1}", x, BytestoString(chunkb));
+                            }
+
+                            //Unknow Coord
+                            Console.WriteLine(")");
+                            Console.Write("Third Coordinate: (");
+                            for (int x = 1; x < 3; x++) //we have 4 bytes here
+                            {
+                                var chunka = reader.ReadBytes(1);
+                                c.AddBytes(chunka);
+                                //Console.WriteLine("Unknown bytes - chunk-{0}-a: {1}", x, BytestoString(chunka));
+
+                                var coord = reader.ReadBytes(2);
+                                c.AddBytes(coord);
+                                Console.Write("{0}{1}", BitConverter.ToUInt16(coord, 0), x % 2 == 0 ? "" : ", ");
+
+                                var chunkb = reader.ReadBytes(1);
+                                c.AddBytes(chunkb);
+                                //Console.WriteLine("Unknown bytes - chunk-{0}-b: {1}", x, BytestoString(chunkb));
+                            }
 
                             var un2 = reader.ReadBytes(2);
                             c.AddBytes(un2);
+                            Console.WriteLine(")");
                             Console.WriteLine("Unknown bytes - un2: {0}", BytestoString(un2));
 
                             Console.WriteLine("CRC Match: {0}", c.Check(reader.ReadBytes(4)) ? "PASS" : "!!!FAIL!!!");

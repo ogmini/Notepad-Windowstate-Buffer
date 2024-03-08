@@ -34,6 +34,11 @@ namespace Notepad_Windowstate_Buffer
             AddBytes(LEB128Converter.WriteLEB128Unsigned(value));
         }
 
+        public void AddBytes(ushort value)
+        {
+
+        }
+
         public bool Check(byte[] crc32)
         {
             var crc32calculated = Crc32.Hash(data.ToArray());
