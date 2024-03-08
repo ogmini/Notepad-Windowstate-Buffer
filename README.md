@@ -12,5 +12,7 @@ Please see my other repository for the [Tabstate files](https://github.com/ogmin
 
  - First 2 bytes "NP"
  - Sequence number (Stored as an unsigned LEB128)
+ - Unknown
+ - CRC 32 of all the previous bytes starting from the sequence number
 
-CRC 32
+
