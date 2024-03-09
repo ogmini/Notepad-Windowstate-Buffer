@@ -20,4 +20,6 @@ Please see my other repository for the [Tabstate files](https://github.com/ogmin
    - Chunk 5 and 6 are the X,Y Coordinates in UINT16 of the relation to the bottom right corner from the top left. Essentially giving the window width and height.
  - CRC 32 of all the previous bytes starting from the sequence number
 
+Opening New Tabs will cause more bytes to be written what are these?
+
 
