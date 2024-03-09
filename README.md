@@ -17,7 +17,7 @@ Please see my other repository for the [Tabstate files](https://github.com/ogmin
    - There appear to be six 2 byte chunks that are related to moving and sizing. Maybe some sort of coordinates? They also appear to be qualified by 00. (Ex. 00 51 04 00)
    - Chunk 1 and 2 are the X,Y Coordinates in UINT16 of possible one of the top corners?
    - Chunk 3 and 4 are the X,Y Coordinates in UINT16 of possible one of the bottom corners?
-   - Chunk 5 and 6 are the X,Y Coordinates in UINT16 of possible one of the top corners?
+   - Chunk 5 and 6 are the X,Y Coordinates in UINT16 of the relation to the bottom right corner from the top left. Essentially giving the window size.
  - CRC 32 of all the previous bytes starting from the sequence number
 
 
