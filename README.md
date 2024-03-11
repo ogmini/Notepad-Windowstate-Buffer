@@ -17,7 +17,9 @@ Each new tab adds more and more data to the end
  - First 2 bytes "NP"
  - Sequence number (Stored as an unsigned LEB128)
  - 4th byte appears to be a flag 2C
+   - Appears to change with more tabs
  - Unknown 18 bytes
+   - New chunks appear to be added with new tabs
  - Six 2 byte chunks that are by qualified by 00. (Ex. 00 51 04 00)
    - Chunk 1 and 2 are the X,Y Coordinates in UINT16 of the top left corner of the window.
    - Chunk 3 and 4 are the X,Y Coordinates in UINT16 of the bottom right corner of the window.
