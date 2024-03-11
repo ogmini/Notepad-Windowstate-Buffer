@@ -18,7 +18,7 @@ Each new tab adds more and more data to the end
  - Sequence number (Stored as an unsigned LEB128)
  - Number of bytes to the CRC32 (unsigned LEB128?)
  - Unknown 2 bytes (Possibly number of tabs?)
- - Collection of 16 byte chunks (1 for every tab)
+ - Collection of chunks (1 for every tab)
    - New chunks appear to be added with new tabs
  - Six 2 byte chunks that are by qualified by 00. (Ex. 00 51 04 00)
    - Chunk 1 and 2 are the X,Y Coordinates in UINT16 of the top left corner of the window.
