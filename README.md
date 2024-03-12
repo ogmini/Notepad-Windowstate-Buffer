@@ -18,7 +18,7 @@ Please see my other repository for the [Tabstate files](https://github.com/ogmin
 
 ## Overall Behavior
 
-Each new tab adds more and more data to the end
+Each new tab adds more and more data to the end. Closing a tab creates a new chunk at the end of the stream. The files appears to never get smaller? New tabs will remove the chunks at the end.
 
 ## File Format
 
