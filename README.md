@@ -39,6 +39,9 @@ Each new tab adds more and more data to the end
  - Delimiter? (0x00)
  - CRC 32 of all the previous bytes starting from the sequence number
  - Unknown bytes added as tabs are removed/closed
+   - Appears to be 12 byte chunks for each tab
+   - Delimiter? (0x00)
+   - 4 byte CRC 32???? Can't find match 
 
 
 
