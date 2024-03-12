@@ -76,13 +76,13 @@ namespace Notepad_Windowstate_Buffer
                                 Console.WriteLine("GUID: {0}", g);
                             }
 
-                            var un = stream.ReadLEB128Unsigned(); 
+                            var un = stream.ReadLEB128Unsigned(); //Active Tab
                             c.AddBytes(un);
-                            Console.WriteLine("Unknown bytes - un: {0} {1}", BytestoString(LEB128Converter.WriteLEB128Unsigned(un)), un);
+                            Console.WriteLine("Active Tab: {0}", un);
 
                             //Top Left Coord
                             Console.Write("Top Left Coordinate: (");
-                            for (int x = 1; x < 3; x++) //we have 4 bytes here
+                            for (int x = 1; x < 3; x++) 
                             {
                                 var coord = reader.ReadUInt16();
                                 c.AddBytes(coord);
@@ -96,7 +96,7 @@ namespace Notepad_Windowstate_Buffer
                             //Bottom Right Coord
                             Console.WriteLine(")");
                             Console.Write("Bottom Right Coordinate: (");
-                            for (int x = 1; x < 3; x++) //we have 4 bytes here
+                            for (int x = 1; x < 3; x++)
                             {
                                 var coord = reader.ReadUInt16();
                                 c.AddBytes(coord);
@@ -110,9 +110,9 @@ namespace Notepad_Windowstate_Buffer
                             //Window Width and Height
                             Console.WriteLine(")");
                             Console.Write("Window Size: ");
-                            for (int x = 1; x < 3; x++) //we have 4 bytes here
+                            for (int x = 1; x < 3; x++) 
                             {
-                                var coord = reader.ReadUInt16();// reader.ReadBytes(2);
+                                var coord = reader.ReadUInt16();
                                 c.AddBytes(coord);
                                 Console.Write("{0}{1}", x % 2 == 0 ? " Height " : "Width ", coord);
 
