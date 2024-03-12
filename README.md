@@ -23,7 +23,7 @@ Each new tab adds more and more data to the end
    - These are variable
    - Start at 16 byte chunks, grows as we add more tabs
    - Last part appears to be uLEB128 signifying the tab number?
- - Six 2 byte chunks that are by qualified by 00. (Ex. 00 51 04 00)
+ - Six 2 byte chunks that are delimited by 00. (Ex. 51 04 00 00)
    - Chunk 1 and 2 are the X,Y Coordinates in UINT16 of the top left corner of the window.
    - Chunk 3 and 4 are the X,Y Coordinates in UINT16 of the bottom right corner of the window.
    - Chunk 5 and 6 are the X,Y Coordinates in UINT16 of the relation to the bottom right corner from the top left. Essentially giving the window width and height.
