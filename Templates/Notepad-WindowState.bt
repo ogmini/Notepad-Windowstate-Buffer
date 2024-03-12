@@ -1,14 +1,15 @@
 //------------------------------------------------
 //--- 010 Editor v14.0 Binary Template
 //
-//      File: WindowState
-//   Authors: ogmini
+//      File: Notepad-WindowState.bt
+//   Authors: ogmini https://github.com/ogmini
 //   Version: 0.1
-//   Purpose: Parses the Window State file for Windows 11 Notepad
-//  Category: 
-// File Mask: 
-//  ID Bytes: NP
+//   Purpose: Template to make sense of the Window State file for Windows 11 Notepad
+//  Category: Misc
+// File Mask: *.bin 
+//  ID Bytes: 4E 50 //NP
 //   History: 
+//   0.1   2024-03-12 ogmini: Initial version
 //------------------------------------------------
 
 //------------------------------------------------
