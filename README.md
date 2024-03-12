@@ -8,6 +8,10 @@ These are my attempts to reverse engineer the Windowstate files for Notepad in M
 
 Please see my other repository for the [Tabstate files](https://github.com/ogmini/Notepad-Tabstate-Buffer). 
 
+## Thanks
+
+Thanks to @nordgaren for his 010 Editor Binary Template file on the [Notepad Tabstate file](https://github.com/Nordgaren/tabstate-util/blob/master/TabState.bt). It was very handy learning the syntax.   
+
 ## Overall Behavior
 
 Each new tab adds more and more data to the end
