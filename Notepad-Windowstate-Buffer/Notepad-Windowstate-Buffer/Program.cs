@@ -84,12 +84,12 @@ namespace Notepad_Windowstate_Buffer
                             Console.Write("Top Left Coordinate: (");
                             for (int x = 1; x < 3; x++) 
                             {
-                                var coord = reader.ReadUInt16();
+                                var coord = reader.ReadUInt32();
                                 c.AddBytes(coord);
                                 Console.Write("{0}{1}", coord, x % 2 == 0 ? "" : ", ");
 
-                                var chunkb = reader.ReadBytes(2);
-                                c.AddBytes(chunkb);
+                                //var chunkb = reader.ReadBytes(2);
+                                //c.AddBytes(chunkb);
                                 //Console.WriteLine("Unknown bytes - chunk-{0}-b: {1}", x, BytestoString(chunkb));
                             }
 
@@ -98,12 +98,12 @@ namespace Notepad_Windowstate_Buffer
                             Console.Write("Bottom Right Coordinate: (");
                             for (int x = 1; x < 3; x++)
                             {
-                                var coord = reader.ReadUInt16();
+                                var coord = reader.ReadUInt32();
                                 c.AddBytes(coord);
                                 Console.Write("{0}{1}", coord, x % 2 == 0 ? "" : ", ");
 
-                                var chunkb = reader.ReadBytes(2);
-                                c.AddBytes(chunkb);
+                                //var chunkb = reader.ReadBytes(2);
+                                //c.AddBytes(chunkb);
                                 //Console.WriteLine("Unknown bytes - chunk-{0}-b: {1}", x, BytestoString(chunkb));
                             }
 
@@ -112,12 +112,12 @@ namespace Notepad_Windowstate_Buffer
                             Console.Write("Window Size: ");
                             for (int x = 1; x < 3; x++) 
                             {
-                                var coord = reader.ReadUInt16();
+                                var coord = reader.ReadUInt32();
                                 c.AddBytes(coord);
                                 Console.Write("{0}{1}", x % 2 == 0 ? " Height " : "Width ", coord);
 
-                                var chunkb = reader.ReadBytes(2);
-                                c.AddBytes(chunkb);
+                                //var chunkb = reader.ReadBytes(2);
+                                //c.AddBytes(chunkb);
                                 //Console.WriteLine("Unknown bytes - chunk-{0}-b: {1}", x, BytestoString(chunkb));
                             }
 

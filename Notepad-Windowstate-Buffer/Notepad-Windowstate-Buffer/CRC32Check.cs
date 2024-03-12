@@ -39,6 +39,11 @@ namespace Notepad_Windowstate_Buffer
             AddBytes(BitConverter.GetBytes(value));
         }
 
+        public void AddBytes(uint value)
+        {
+            AddBytes(BitConverter.GetBytes(value));
+        }
+
         public bool Check(byte[] crc32)
         {
             var crc32calculated = Crc32.Hash(data.ToArray());
