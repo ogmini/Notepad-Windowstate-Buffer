@@ -54,84 +54,99 @@ namespace Notepad_Windowstate_Buffer
                             c.AddBytes(sequenceNumber);
                             Console.WriteLine("Sequence Number: {0}", sequenceNumber.ToString());
 
-                            var typeFlag = reader.ReadBytes(1);
-                            c.AddBytes(typeFlag);
-                            Console.WriteLine("Flag: {0}", BytestoString(typeFlag));
+                            var bytesToCRC = reader.ReadLEB128Unsigned();
+                            c.AddBytes(bytesToCRC);
+                            Console.WriteLine("Bytes to CRC: {0}", bytesToCRC);
 
-                            var un1 = reader.ReadBytes(18);
-                            c.AddBytes(un1);
-                            Console.WriteLine("Unknown bytes - un1: {0}", BytestoString(un1));
+                            var delim = reader.ReadBytes(1);
+                            c.AddBytes(delim);
+                            Console.WriteLine("Unknown bytes - delim: {0}", BytestoString(delim)); //TODO: This is wrong. Need to figure out the format of the chunks
 
-                            //var chunk1a = reader.ReadBytes(1);
-                            //c.AddBytes(chunk1a);
-                            //Console.WriteLine("Unknown bytes - chunk1a: {0}", BytestoString(chunk1a));
-                            //var coord1 = stream.ReadLEB128Unsigned(); 
-                            //c.AddBytes(coord1);
-                            //Console.WriteLine("coord1a {0}", coord1);
-                            ////var coord1b = stream.ReadLEB128Unsigned();
-                            ////c.AddBytes(coord1b);
-                            ////Console.WriteLine("coord1b {0}", coord1b);
-                            //var chunk1b = reader.ReadBytes(1);
-                            //c.AddBytes(chunk1b);
-                            //Console.WriteLine("Unknown bytes - chunk1b: {0}", BytestoString(chunk1b));
+                            var numTabs = stream.ReadLEB128Unsigned();
+                            c.AddBytes(numTabs);
+                            Console.WriteLine("Tabs: {0}", numTabs);
+                            //var un1 = reader.ReadBytes(2); // Maybe number of tabs?? is in here?
+                            //c.AddBytes(un1);
+                            //Console.WriteLine("Unknown bytes - un1: {0}", BytestoString(un1));
 
-                            //Bottom Left Coord
-                            Console.Write("First Coordinate: (");
+                            //var clength = (bytesToCRC - 1)
+
+                            //var un2 = reader.ReadBytes((int)clength);
+                            //c.AddBytes(un2);
+                            //Console.WriteLine("Unknown bytes - un2: {0}", BytestoString(un2)); //TODO: This is wrong. Need to figure out the format of the chunks
+
+                            for (int x = 0; x < (int)numTabs; x++)
+                            {
+                                var chunk = reader.ReadBytes(16);
+                                c.AddBytes(chunk);
+                                Console.WriteLine("Unknown bytes - chunk{0}: {1}", x, BytestoString(chunk));
+
+                                Guid g = new Guid(chunk);
+                                Console.WriteLine("GUID: {0}", g);
+
+                                //var tabNumber = reader.ReadLEB128Unsigned();
+                                //c.AddBytes(tabNumber);
+                                //Console.WriteLine("Tab Number: {0}", tabNumber);
+                            }
+
+
+
+
+                            //var un1 = reader.ReadBytes(18);
+                            //c.AddBytes(un1);
+                            //Console.WriteLine("Unknown bytes - un1: {0}", BytestoString(un1));
+                            //TODO: 2nd byte appears to increment with added Tabs. 
+
+                            var un = stream.ReadLEB128Unsigned(); //reader.ReadBytes(1);  //TODO: This might be a uLEB128 again...
+                            c.AddBytes(un);
+                            Console.WriteLine("Unknown bytes - un: {0} {1}", BytestoString(LEB128Converter.WriteLEB128Unsigned(un)), un);
+
+
+                            //Top Left Coord
+                            Console.Write("Top Left Coordinate: (");
                             for (int x = 1; x < 3; x++) //we have 4 bytes here
                             {
-                                var chunka = reader.ReadBytes(1);
-                                c.AddBytes(chunka);
-                                //Console.WriteLine("Unknown bytes - chunk-{0}-a: {1}", x, BytestoString(chunka));
-
                                 var coord = reader.ReadBytes(2);
                                 c.AddBytes(coord);
                                 Console.Write("{0}{1}", BitConverter.ToUInt16(coord, 0), x%2 == 0 ? "" : ", ");
 
-                                var chunkb = reader.ReadBytes(1);
+                                var chunkb = reader.ReadBytes(2);
                                 c.AddBytes(chunkb);
                                 //Console.WriteLine("Unknown bytes - chunk-{0}-b: {1}", x, BytestoString(chunkb));
                             }
 
-                            //Top Right Coord
+                            //Bottom Right Coord
                             Console.WriteLine(")");
-                            Console.Write("Second Coordinate: (");
+                            Console.Write("Bottom Right Coordinate: (");
                             for (int x = 1; x < 3; x++) //we have 4 bytes here
                             {
-                                var chunka = reader.ReadBytes(1);
-                                c.AddBytes(chunka);
-                                //Console.WriteLine("Unknown bytes - chunk-{0}-a: {1}", x, BytestoString(chunka));
-
                                 var coord = reader.ReadBytes(2);
                                 c.AddBytes(coord);
                                 Console.Write("{0}{1}", BitConverter.ToUInt16(coord, 0), x % 2 == 0 ? "" : ", ");
 
-                                var chunkb = reader.ReadBytes(1);
+                                var chunkb = reader.ReadBytes(2);
                                 c.AddBytes(chunkb);
                                 //Console.WriteLine("Unknown bytes - chunk-{0}-b: {1}", x, BytestoString(chunkb));
                             }
 
-                            //Unknow Coord
+                            //Window Width and Height
                             Console.WriteLine(")");
-                            Console.Write("Third Coordinate: (");
+                            Console.Write("Window Size: ");
                             for (int x = 1; x < 3; x++) //we have 4 bytes here
                             {
-                                var chunka = reader.ReadBytes(1);
-                                c.AddBytes(chunka);
-                                //Console.WriteLine("Unknown bytes - chunk-{0}-a: {1}", x, BytestoString(chunka));
-
                                 var coord = reader.ReadBytes(2);
                                 c.AddBytes(coord);
-                                Console.Write("{0}{1}", BitConverter.ToUInt16(coord, 0), x % 2 == 0 ? "" : ", ");
+                                Console.Write("{0}{1}", x % 2 == 0 ? " Height " : "Width ", BitConverter.ToUInt16(coord, 0));
 
-                                var chunkb = reader.ReadBytes(1);
+                                var chunkb = reader.ReadBytes(2);
                                 c.AddBytes(chunkb);
                                 //Console.WriteLine("Unknown bytes - chunk-{0}-b: {1}", x, BytestoString(chunkb));
                             }
 
-                            var un2 = reader.ReadBytes(2);
-                            c.AddBytes(un2);
-                            Console.WriteLine(")");
-                            Console.WriteLine("Unknown bytes - un2: {0}", BytestoString(un2));
+                            var delim2 = reader.ReadBytes(1);
+                            c.AddBytes(delim2);
+                            Console.WriteLine();
+                            Console.WriteLine("Unknown bytes - delim2: {0}", BytestoString(delim2));
 
                             Console.WriteLine("CRC Match: {0}", c.Check(reader.ReadBytes(4)) ? "PASS" : "!!!FAIL!!!");
 
