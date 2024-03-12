@@ -60,55 +60,33 @@ namespace Notepad_Windowstate_Buffer
 
                             var delim = reader.ReadBytes(1);
                             c.AddBytes(delim);
-                            Console.WriteLine("Unknown bytes - delim: {0}", BytestoString(delim)); //TODO: This is wrong. Need to figure out the format of the chunks
+                            Console.WriteLine("Unknown bytes - delim: {0}", BytestoString(delim)); 
 
                             var numTabs = stream.ReadLEB128Unsigned();
                             c.AddBytes(numTabs);
                             Console.WriteLine("Tabs: {0}", numTabs);
-                            //var un1 = reader.ReadBytes(2); // Maybe number of tabs?? is in here?
-                            //c.AddBytes(un1);
-                            //Console.WriteLine("Unknown bytes - un1: {0}", BytestoString(un1));
 
-                            //var clength = (bytesToCRC - 1)
-
-                            //var un2 = reader.ReadBytes((int)clength);
-                            //c.AddBytes(un2);
-                            //Console.WriteLine("Unknown bytes - un2: {0}", BytestoString(un2)); //TODO: This is wrong. Need to figure out the format of the chunks
 
                             for (int x = 0; x < (int)numTabs; x++)
                             {
                                 var chunk = reader.ReadBytes(16);
                                 c.AddBytes(chunk);
-                                Console.WriteLine("Unknown bytes - chunk{0}: {1}", x, BytestoString(chunk));
-
+                                //Console.WriteLine("Unknown bytes - chunk{0}: {1}", x, BytestoString(chunk));
                                 Guid g = new Guid(chunk);
                                 Console.WriteLine("GUID: {0}", g);
-
-                                //var tabNumber = reader.ReadLEB128Unsigned();
-                                //c.AddBytes(tabNumber);
-                                //Console.WriteLine("Tab Number: {0}", tabNumber);
                             }
 
-
-
-
-                            //var un1 = reader.ReadBytes(18);
-                            //c.AddBytes(un1);
-                            //Console.WriteLine("Unknown bytes - un1: {0}", BytestoString(un1));
-                            //TODO: 2nd byte appears to increment with added Tabs. 
-
-                            var un = stream.ReadLEB128Unsigned(); //reader.ReadBytes(1);  //TODO: This might be a uLEB128 again...
+                            var un = stream.ReadLEB128Unsigned(); 
                             c.AddBytes(un);
                             Console.WriteLine("Unknown bytes - un: {0} {1}", BytestoString(LEB128Converter.WriteLEB128Unsigned(un)), un);
-
 
                             //Top Left Coord
                             Console.Write("Top Left Coordinate: (");
                             for (int x = 1; x < 3; x++) //we have 4 bytes here
                             {
-                                var coord = reader.ReadBytes(2);
+                                var coord = reader.ReadUInt16();
                                 c.AddBytes(coord);
-                                Console.Write("{0}{1}", BitConverter.ToUInt16(coord, 0), x%2 == 0 ? "" : ", ");
+                                Console.Write("{0}{1}", coord, x % 2 == 0 ? "" : ", ");
 
                                 var chunkb = reader.ReadBytes(2);
                                 c.AddBytes(chunkb);
@@ -120,9 +98,9 @@ namespace Notepad_Windowstate_Buffer
                             Console.Write("Bottom Right Coordinate: (");
                             for (int x = 1; x < 3; x++) //we have 4 bytes here
                             {
-                                var coord = reader.ReadBytes(2);
+                                var coord = reader.ReadUInt16();
                                 c.AddBytes(coord);
-                                Console.Write("{0}{1}", BitConverter.ToUInt16(coord, 0), x % 2 == 0 ? "" : ", ");
+                                Console.Write("{0}{1}", coord, x % 2 == 0 ? "" : ", ");
 
                                 var chunkb = reader.ReadBytes(2);
                                 c.AddBytes(chunkb);
@@ -134,9 +112,9 @@ namespace Notepad_Windowstate_Buffer
                             Console.Write("Window Size: ");
                             for (int x = 1; x < 3; x++) //we have 4 bytes here
                             {
-                                var coord = reader.ReadBytes(2);
+                                var coord = reader.ReadUInt16();// reader.ReadBytes(2);
                                 c.AddBytes(coord);
-                                Console.Write("{0}{1}", x % 2 == 0 ? " Height " : "Width ", BitConverter.ToUInt16(coord, 0));
+                                Console.Write("{0}{1}", x % 2 == 0 ? " Height " : "Width ", coord);
 
                                 var chunkb = reader.ReadBytes(2);
                                 c.AddBytes(chunkb);
@@ -149,7 +127,6 @@ namespace Notepad_Windowstate_Buffer
                             Console.WriteLine("Unknown bytes - delim2: {0}", BytestoString(delim2));
 
                             Console.WriteLine("CRC Match: {0}", c.Check(reader.ReadBytes(4)) ? "PASS" : "!!!FAIL!!!");
-
                             Console.WriteLine("End of Stream");
                      
                         }

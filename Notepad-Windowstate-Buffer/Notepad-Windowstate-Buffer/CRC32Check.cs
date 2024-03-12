@@ -36,7 +36,7 @@ namespace Notepad_Windowstate_Buffer
 
         public void AddBytes(ushort value)
         {
-
+            AddBytes(BitConverter.GetBytes(value));
         }
 
         public bool Check(byte[] crc32)
