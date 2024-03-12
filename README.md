@@ -10,7 +10,7 @@ Please see my other repository for the [Tabstate files](https://github.com/ogmin
 
 ## Thanks
 
-Thanks to [NordGaren](https://github.com/Nordgaren) for his 010 Editor Binary Template file on the [Notepad Tabstate file](https://github.com/Nordgaren/tabstate-util/blob/master/TabState.bt). It was very handy learning the syntax.   
+Thanks to [NordGaren](https://github.com/Nordgaren) for his 010 Editor Binary Template file on the [Notepad Tabstate file](https://github.com/Nordgaren/tabstate-util/blob/master/TabState.bt). It was very handy learning the syntax and the struct/functions for uLEB128.   
 
 ## Overall Behavior
 
