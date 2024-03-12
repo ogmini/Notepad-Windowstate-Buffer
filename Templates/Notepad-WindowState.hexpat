@@ -19,11 +19,8 @@ struct WindowState
     u8 Delim[1];
     ul NumberTabs;
 
-    // TODO: Loop records  
     Tab Tabs[NumberTabs];
     
-    
-    //
     ul ActiveTab;
     
     int CoordTopLeftX;
@@ -46,6 +43,3 @@ struct WindowState
 // -- Declaration --
 
 WindowState state @ 0x0;
-
-
-
