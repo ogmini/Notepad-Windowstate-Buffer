@@ -9,10 +9,12 @@ These are my attempts to reverse engineer the Windowstate files for Notepad in M
 Please see my other repository for the [Tabstate files](https://github.com/ogmini/Notepad-Tabstate-Buffer). 
 
 - [010 Editor Binary Template](https://github.com/ogmini/Notepad-Windowstate-Buffer/tree/main/Templates/Notepad-WindowState.bt)
+- [imHex Pattern](https://github.com/ogmini/Notepad-Windowstate-Buffer/blob/main/Templates/Notepad-WindowState.hexpat)
 
 ## Thanks
 
-Thanks to [NordGaren](https://github.com/Nordgaren) for his 010 Editor Binary Template file on the [Notepad Tabstate file](https://github.com/Nordgaren/tabstate-util/blob/master/TabState.bt). It was very handy learning the syntax and the struct/functions for uLEB128.   
+[NordGaren](https://github.com/Nordgaren) for his 010 Editor Binary Template file on the [Notepad Tabstate file](https://github.com/Nordgaren/tabstate-util/blob/master/TabState.bt). It was very handy learning the syntax and the struct/functions for uLEB128.     
+[JustArrion](https://github.com/JustArion) for his imHex Pattern file on the [Notepad Tabstate file](https://github.com/JustArion/Notepad-Tabs/blob/main/ImHex-Patterns/NotepadTab.hexpat). It was very handly learning the syntax.   
 
 ## Overall Behavior
 
