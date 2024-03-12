@@ -1,0 +1,82 @@
+//------------------------------------------------
+//--- 010 Editor v14.0 Binary Template
+//
+//      File: WindowState
+//   Authors: ogmini
+//   Version: 0.1
+//   Purpose: Parses the Window State file for Windows 11 Notepad
+//  Category: 
+// File Mask: 
+//  ID Bytes: NP
+//   History: 
+//------------------------------------------------
+
+//------------------------------------------------
+//                   Structs
+//------------------------------------------------
+
+typedef struct {
+    do {
+        ubyte bytes;
+    } while (bytes > 0x7f);
+} Uleb128 <bgcolor=cRed, read=Uleb128ValueToStr>;
+
+//------------------------------------------------
+//                   Funcs
+//------------------------------------------------
+
+uint64 DecodeUleb128(Uleb128 &varint) {
+    local uint64 val = 0;
+    local int i;
+    local uint64 num;
+    for( i = 0; i < sizeof(varint); i++ ) {
+        num = varint.bytes[i] & 0x7F;
+        val |= num << (i * 7);
+    }
+    return val;
+}
+string Uleb128ValueToStr(Uleb128 &varint) {
+    return Str("0x%X", DecodeUleb128(varint));
+}
+
+//------------------------------------------------
+//                   File
+//------------------------------------------------
+
+struct FILE {
+    struct HEADER {
+        char    type[2];        
+    } header <bgcolor=cLtGray>;
+
+    Uleb128 sequenceNumber;
+    Uleb128 bytestoCRC32;
+    ubyte delim;
+    Uleb128 numberTabs;
+
+    struct RECORD {
+        GUID g;
+    } record[DecodeUleb128(file.numberTabs)] <bgcolor=cGreen>;
+    
+    
+   Uleb128 activeTab;
+   
+   struct CoordTopLeft {
+          uint32 coordx;
+          uint32 coordy;
+       } coordtopleft <bgcolor=cBlue>;
+
+   struct CoordBottomRight {
+          uint32 coordx;
+          uint32 coordy;
+       } coordbottomright <bgcolor=cLtBlue>;
+       
+   struct WindowSize {
+        uint32 width;
+        uint32 height;    
+    } windowsize <bgcolor=cAqua>;
+   
+    
+   ubyte delim;
+   uint32 crc32 <format=hex, bgcolor=cLtGray>;
+
+} file;
