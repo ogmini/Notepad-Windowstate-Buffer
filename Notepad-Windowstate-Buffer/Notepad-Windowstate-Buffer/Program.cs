@@ -71,9 +71,8 @@ namespace Notepad_Windowstate_Buffer
                             {
                                 var chunk = reader.ReadBytes(16);
                                 c.AddBytes(chunk);
-                                //Console.WriteLine("Unknown bytes - chunk{0}: {1}", x, BytestoString(chunk));
                                 Guid g = new Guid(chunk);
-                                Console.WriteLine("GUID: {0}", g);
+                                Console.WriteLine("Tab #{0} GUID: {1}",x, g);
                             }
 
                             var un = stream.ReadLEB128Unsigned(); //Active Tab
@@ -87,10 +86,6 @@ namespace Notepad_Windowstate_Buffer
                                 var coord = reader.ReadUInt32();
                                 c.AddBytes(coord);
                                 Console.Write("{0}{1}", coord, x % 2 == 0 ? "" : ", ");
-
-                                //var chunkb = reader.ReadBytes(2);
-                                //c.AddBytes(chunkb);
-                                //Console.WriteLine("Unknown bytes - chunk-{0}-b: {1}", x, BytestoString(chunkb));
                             }
 
                             //Bottom Right Coord
@@ -101,10 +96,6 @@ namespace Notepad_Windowstate_Buffer
                                 var coord = reader.ReadUInt32();
                                 c.AddBytes(coord);
                                 Console.Write("{0}{1}", coord, x % 2 == 0 ? "" : ", ");
-
-                                //var chunkb = reader.ReadBytes(2);
-                                //c.AddBytes(chunkb);
-                                //Console.WriteLine("Unknown bytes - chunk-{0}-b: {1}", x, BytestoString(chunkb));
                             }
 
                             //Window Width and Height
@@ -115,10 +106,6 @@ namespace Notepad_Windowstate_Buffer
                                 var coord = reader.ReadUInt32();
                                 c.AddBytes(coord);
                                 Console.Write("{0}{1}", x % 2 == 0 ? " Height " : "Width ", coord);
-
-                                //var chunkb = reader.ReadBytes(2);
-                                //c.AddBytes(chunkb);
-                                //Console.WriteLine("Unknown bytes - chunk-{0}-b: {1}", x, BytestoString(chunkb));
                             }
 
                             var delim2 = reader.ReadBytes(1);
