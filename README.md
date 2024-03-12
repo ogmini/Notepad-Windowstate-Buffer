@@ -24,10 +24,10 @@ Each new tab adds more and more data to the end
    - Chunks are ordered the same was as in Notepad. Changing the order will change the order of the chunks accordingly.
    - GUID of the associated Tabstate file
  - Active Tab (uLEB128)
- - Six 4 byte chunks 
-   - Chunk 1 and 2 are the X,Y Coordinates in uINT32 of the top left corner of the window.
-   - Chunk 3 and 4 are the X,Y Coordinates in uINT32 of the bottom right corner of the window.
-   - Chunk 5 and 6 are the X,Y Coordinates in uINT32 of the relation to the bottom right corner from the top left. Essentially giving the window width and height.
+ - Six uINT32 Numbers
+   - Numbers 1 and 2 are the X,Y Coordinates in uINT32 of the top left corner of the window.
+   - Numbers 3 and 4 are the X,Y Coordinates in uINT32 of the bottom right corner of the window.
+   - Numbers 5 and 6 are the X,Y Coordinates in uINT32 of the relation to the bottom right corner from the top left. Essentially giving the window width and height.
  - Delimiter? (0x00)
  - CRC 32 of all the previous bytes starting from the sequence number
 
