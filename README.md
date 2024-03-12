@@ -22,6 +22,7 @@ Each new tab adds more and more data to the end
    - New chunks appear to be added with new tabs
    - These are variable
    - Start at 16 byte chunks, grows as we add more tabs
+   - These chunks are in the same order as they are displayed. Changing the name or text of a tab doesn't change the chunk. Are some bytes referencing the bin file?
    - Last part appears to be uLEB128 signifying the tab number?
  - Six 2 byte chunks that are delimited by 00. (Ex. 51 04 00 00)
    - Chunk 1 and 2 are the X,Y Coordinates in UINT16 of the top left corner of the window.
