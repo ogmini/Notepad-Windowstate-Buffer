@@ -8,7 +8,7 @@ These are my attempts to reverse engineer the Windowstate files for Notepad in M
 
 Please see my other repository for the [Tabstate files](https://github.com/ogmini/Notepad-Tabstate-Buffer). 
 
-- (010 Editor Binary Template)[https://github.com/ogmini/Notepad-Windowstate-Buffer/blob/main/010%20Editor%20Template/Notepad-WindowState.bt]
+- (010 Editor Binary Template)[https://github.com/ogmini/Notepad-Windowstate-Buffer/tree/main/Templates]
 
 ## Thanks
 
