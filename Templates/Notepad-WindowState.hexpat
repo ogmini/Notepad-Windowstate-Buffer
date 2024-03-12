@@ -6,6 +6,11 @@
 using ul = type::uLEB128;
 using int = u32;
 
+struct Tab
+{
+    u128 GUID;
+};
+
 struct WindowState
 {
     char NullTerminatedHeaderIdentifier[2]; // NP
@@ -15,7 +20,7 @@ struct WindowState
     ul NumberTabs;
 
     // TODO: Loop records  
-    u8 blob[16];
+    Tab Tabs[NumberTabs];
     
     
     //
@@ -35,6 +40,12 @@ struct WindowState
     int crc32;
 };
 
+
+
+
 // -- Declaration --
 
 WindowState state @ 0x0;
+
+
+
