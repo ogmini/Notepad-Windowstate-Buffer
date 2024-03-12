@@ -38,7 +38,7 @@ Each new tab adds more and more data to the end
    - Numbers 5 and 6 are the X,Y Coordinates in uINT32 of the relation to the bottom right corner from the top left. Essentially giving the window width and height.
  - Delimiter? (0x00)
  - CRC 32 of all the previous bytes starting from the sequence number
-
+ - Unknown bytes added as tabs are removed/closed
 
 
 
