@@ -20,10 +20,7 @@ Each new tab adds more and more data to the end
  - Unknown 2 bytes (Possibly number of tabs?)
  - Collection of chunks (1 for every tab)
    - New chunks appear to be added with new tabs
-   - These are variable
-   - Start at 16 byte chunks, grows as we add more tabs
-   - These chunks are in the same order as they are displayed. Changing the name or text of a tab doesn't change the chunk. Are some bytes referencing the bin file?
-   - Last part appears to be uLEB128 signifying the tab number?
+   - GUID of the associated Tabstate file
  - Six 2 byte chunks that are delimited by 00. (Ex. 51 04 00 00)
    - Chunk 1 and 2 are the X,Y Coordinates in UINT16 of the top left corner of the window.
    - Chunk 3 and 4 are the X,Y Coordinates in UINT16 of the bottom right corner of the window.
