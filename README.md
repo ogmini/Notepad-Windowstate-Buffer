@@ -15,18 +15,21 @@ Each new tab adds more and more data to the end
 ## File Format
 
  - First 2 bytes "NP"
- - Sequence number (Stored as an unsigned LEB128)
- - Number of bytes to the CRC32 (unsigned LEB128?)
- - Unknown 2 bytes (Possibly number of tabs?)
+ - Sequence number (uLEB128)
+ - Number of bytes to the CRC32 (uLEB128)
+ - Delimiter? (0x00)
+ - Number of Tabs (uLEB128)
  - Collection of chunks (1 for every tab)
-   - New chunks appear to be added with new tabs
+   - New chunks added with new tabs
+   - Chunks are ordered the same was as in Notepad. Changing the order will change the order of the chunks accordingly.
    - GUID of the associated Tabstate file
  - Six 2 byte chunks that are delimited by 00. (Ex. 51 04 00 00)
-   - Chunk 1 and 2 are the X,Y Coordinates in UINT16 of the top left corner of the window.
-   - Chunk 3 and 4 are the X,Y Coordinates in UINT16 of the bottom right corner of the window.
-   - Chunk 5 and 6 are the X,Y Coordinates in UINT16 of the relation to the bottom right corner from the top left. Essentially giving the window width and height.
+   - Chunk 1 and 2 are the X,Y Coordinates in uINT16 of the top left corner of the window.
+   - Chunk 3 and 4 are the X,Y Coordinates in uINT16 of the bottom right corner of the window.
+   - Chunk 5 and 6 are the X,Y Coordinates in uINT16 of the relation to the bottom right corner from the top left. Essentially giving the window width and height.
+ - Delimiter? (0x00)
  - CRC 32 of all the previous bytes starting from the sequence number
 
-Opening New Tabs will cause more bytes to be written what are these?
+
 
 
