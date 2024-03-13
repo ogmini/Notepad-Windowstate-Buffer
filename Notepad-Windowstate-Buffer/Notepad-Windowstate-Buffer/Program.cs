@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -114,6 +115,96 @@ namespace Notepad_Windowstate_Buffer
                             Console.WriteLine("Unknown bytes - delim2: {0}", BytestoString(delim2));
 
                             Console.WriteLine("CRC Match: {0}", c.Check(reader.ReadBytes(4)) ? "PASS" : "!!!FAIL!!!");
+
+
+                            //TODO: Check for slack space
+                            if (reader.BaseStream.Length > reader.BaseStream.Position)
+                            {
+
+                                Console.WriteLine("Slack Space Detected");
+                                
+                                List<byte> slackBuffer = new List<byte>();
+                                //Byte[] slackArray = new Byte[0];
+
+                                //TODO: Populate array with the leftover bytes.
+                                // Bytes in Reverse Order
+                                // 4 byte CRC 32
+                                // 1 Byte Delim
+                                // 6 int32 (4 Bytes each)
+                                // uLEB128 Active Tab
+                                // u128 GUIDS
+
+                                //TODO: Above isn't possible. This data could get very munged as the file space changes over time... What options do we have here...
+
+                                // ALL OF THIS MAY BE PARTIAL AND RELIES ON ENOUGH TABS BEING OPENED AT THE SAME TIME AND LATER CLOSED
+                               
+
+                                while (reader.BaseStream.Length > reader.BaseStream.Position)
+                                {
+                                    var u = reader.ReadByte();
+                                    slackBuffer.Add(u);
+                                }
+
+                                Console.WriteLine(BytestoString(slackBuffer.ToArray()));
+                                
+                                
+                                if (slackBuffer.Count > 42)
+                                {
+
+
+                                }
+                                else
+                                {
+                                    //using (MemoryStream memSt = new MemoryStream(slackBuffer.ToArray()))
+                                    //{
+                                    //    using (BinaryReader rdr = new BinaryReader(memSt))
+                                    //    {
+                                    //        try
+                                    //        {
+                                    //            var aTab = memSt.ReadLEB128Unsigned();
+                                    //            Console.WriteLine("Active Tab: {0}", un);
+
+                                    //            var c1 = rdr.ReadUInt32();
+                                    //            Console.WriteLine("{0}", c1);
+
+                                    //            var c2 = rdr.ReadUInt32();
+                                    //            Console.WriteLine("{0}", c1);
+
+                                    //            var c3 = rdr.ReadUInt32();
+                                    //            Console.WriteLine("{0}", c1);
+
+                                    //            var c4 = rdr.ReadUInt32();
+                                    //            Console.WriteLine("{0}", c1);
+
+                                    //            var c5 = rdr.ReadUInt32();
+                                    //            Console.WriteLine("{0}", c1);
+
+                                    //            var c6 = rdr.ReadUInt32();
+                                    //            Console.WriteLine("{0}", c1);
+
+                                    //            var d = rdr.ReadBytes(1);
+
+                                    //            var crc = rdr.ReadBytes(4);
+                                    //            Array.Reverse(crc);
+                                    //            Console.WriteLine("Recovered CRC: {0}", BytestoString(crc));
+                                    //        }
+                                    //        catch
+                                    //        {
+
+                                    //        }
+                                    //    }
+                                    //}
+                                }
+
+                                
+                                //slackBuffer.Reverse();
+
+                                ////Console.WriteLine(String.Join(" ", slackBuffer));
+                                //Console.WriteLine(BytestoString(slackBuffer.ToArray()));
+                            }
+
+
+
                             Console.WriteLine("End of Stream");
                      
                         }
@@ -136,6 +227,14 @@ namespace Notepad_Windowstate_Buffer
             }
 
             return retVal;
+        }
+
+        private static byte[] AddByteToArray(byte[] bArray, byte newByte)
+        {
+            byte[] newArray = new byte[bArray.Length + 1];
+            bArray.CopyTo(newArray, 1);
+            newArray[0] = newByte;
+            return newArray;
         }
     }
 }
