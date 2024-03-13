@@ -120,11 +120,12 @@ namespace Notepad_Windowstate_Buffer
                             //TODO: Check for slack space
                             if (reader.BaseStream.Length > reader.BaseStream.Position)
                             {
-
-                                Console.WriteLine("Slack Space Detected");
-                                
                                 List<byte> slackBuffer = new List<byte>();
-                                //Byte[] slackArray = new Byte[0];
+                                while (reader.BaseStream.Length > reader.BaseStream.Position)
+                                {
+                                    var u = reader.ReadByte();
+                                    slackBuffer.Add(u);
+                                }
 
                                 //TODO: Populate array with the leftover bytes.
                                 // Bytes in Reverse Order
@@ -137,76 +138,98 @@ namespace Notepad_Windowstate_Buffer
                                 //TODO: Above isn't possible. This data could get very munged as the file space changes over time... What options do we have here...
 
                                 // ALL OF THIS MAY BE PARTIAL AND RELIES ON ENOUGH TABS BEING OPENED AT THE SAME TIME AND LATER CLOSED
-                               
 
-                                while (reader.BaseStream.Length > reader.BaseStream.Position)
-                                {
-                                    var u = reader.ReadByte();
-                                    slackBuffer.Add(u);
-                                }
 
+                                //32 chunks for now. This will break once the Active Tab which is a uLEB128 goes beyond 1 byte, it will encroach on the partial GUID
+
+
+                                Console.WriteLine("Slack Space Detected of {0} bytes", slackBuffer.Count);
                                 Console.WriteLine(BytestoString(slackBuffer.ToArray()));
-                                
-                                
-                                if (slackBuffer.Count > 42)
+
+                                switch (slackBuffer.Count)
                                 {
+                                    case var e when slackBuffer.Count > 32:
+                                        {
+                                            using (MemoryStream memSt = new MemoryStream(slackBuffer.ToArray()))
+                                            {
+                                                using (BinaryReader rdr = new BinaryReader(memSt))
+                                                {
+                                                    try
+                                                    {
+                                                        while (rdr.BaseStream.Length > rdr.BaseStream.Position)
+                                                        {
+                                                            Console.WriteLine("---- Recovered Chunk ----");
+                                                            var partGUID = rdr.ReadBytes(2);
+                                                            Console.WriteLine("Partial GUID: {0}", BytestoString(partGUID));
 
+                                                            var aTab = memSt.ReadLEB128Unsigned();
+                                                            Console.WriteLine("Active Tab: {0}", aTab);
 
+                                                            var c1 = rdr.ReadUInt32();
+                                                            var c2 = rdr.ReadUInt32();
+                                                            Console.WriteLine("Top Left Coordinate: ({0}, {1})", c1, c2);
+
+                                                            var c3 = rdr.ReadUInt32();
+                                                            var c4 = rdr.ReadUInt32();
+                                                            Console.WriteLine("Bottom Right Coordinate: ({0}, {1})", c3, c4);
+
+                                                            var c5 = rdr.ReadUInt32();
+                                                            var c6 = rdr.ReadUInt32();
+                                                            Console.WriteLine("Window Size: Width {0} Height {1}", c5, c6);
+
+                                                            var d = rdr.ReadBytes(1);
+
+                                                            var crc = rdr.ReadBytes(4);
+                                                            Console.WriteLine("Recovered CRC: {0}", BytestoString(crc));
+                                                        }
+                                                    }
+                                                    catch
+                                                    {
+
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        break;
+                                    case 17:
+                                        {
+                                            using (MemoryStream memSt = new MemoryStream(slackBuffer.ToArray()))
+                                            {
+                                                using (BinaryReader rdr = new BinaryReader(memSt))
+                                                {
+                                                    try
+                                                    {
+                                                        while (rdr.BaseStream.Length > rdr.BaseStream.Position)
+                                                        {
+                                                            Console.WriteLine("---- Recovered Chunk ----");
+
+                                                            var c3 = "N/A";
+                                                            var c4 = rdr.ReadUInt32();
+                                                            Console.WriteLine("Bottom Right Coordinate: ({0}, {1})", c3, c4);
+
+                                                            var c5 = rdr.ReadUInt32();
+                                                            var c6 = rdr.ReadUInt32();
+                                                            Console.WriteLine("Window Size: Width {0} Height {1}", c5, c6);
+
+                                                            var d = rdr.ReadBytes(1);
+
+                                                            var crc = rdr.ReadBytes(4);
+                                                            Console.WriteLine("Recovered CRC: {0}", BytestoString(crc));
+                                                        }
+                                                    }
+                                                    catch
+                                                    {
+
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        break;
+                                    default:
+                                        break;
                                 }
-                                else
-                                {
-                                    //using (MemoryStream memSt = new MemoryStream(slackBuffer.ToArray()))
-                                    //{
-                                    //    using (BinaryReader rdr = new BinaryReader(memSt))
-                                    //    {
-                                    //        try
-                                    //        {
-                                    //            var aTab = memSt.ReadLEB128Unsigned();
-                                    //            Console.WriteLine("Active Tab: {0}", un);
-
-                                    //            var c1 = rdr.ReadUInt32();
-                                    //            Console.WriteLine("{0}", c1);
-
-                                    //            var c2 = rdr.ReadUInt32();
-                                    //            Console.WriteLine("{0}", c1);
-
-                                    //            var c3 = rdr.ReadUInt32();
-                                    //            Console.WriteLine("{0}", c1);
-
-                                    //            var c4 = rdr.ReadUInt32();
-                                    //            Console.WriteLine("{0}", c1);
-
-                                    //            var c5 = rdr.ReadUInt32();
-                                    //            Console.WriteLine("{0}", c1);
-
-                                    //            var c6 = rdr.ReadUInt32();
-                                    //            Console.WriteLine("{0}", c1);
-
-                                    //            var d = rdr.ReadBytes(1);
-
-                                    //            var crc = rdr.ReadBytes(4);
-                                    //            Array.Reverse(crc);
-                                    //            Console.WriteLine("Recovered CRC: {0}", BytestoString(crc));
-                                    //        }
-                                    //        catch
-                                    //        {
-
-                                    //        }
-                                    //    }
-                                    //}
-                                }
-
-                                
-                                //slackBuffer.Reverse();
-
-                                ////Console.WriteLine(String.Join(" ", slackBuffer));
-                                //Console.WriteLine(BytestoString(slackBuffer.ToArray()));
                             }
-
-
-
                             Console.WriteLine("End of Stream");
-                     
                         }
                         else
                         {
