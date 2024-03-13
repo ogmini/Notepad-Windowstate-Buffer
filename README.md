@@ -39,7 +39,8 @@ Each new tab adds more and more data to the end. Closing a tab creates a new chu
  - Delimiter? (0x00)
  - CRC 32 of all the previous bytes starting from the sequence number
  - Slackspace as tabs are removed/closed
-   - Prior CRC32, Coords, Active Tab, GUIDs can be recovered potentially
+   - Prior CRC32, Coords, partial Active Tab, and partial GUID can be recovered potentially
+   - This data will get super munged over time
 
 
 
