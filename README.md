@@ -18,7 +18,7 @@ Please see my other repository for the [Tabstate files](https://github.com/ogmin
 
 ## Overall Behavior
 
-Each new tab adds more and more data to the end
+Each new tab adds more and more data to the end. Closing a tab creates a new chunk at the end of the stream. The files appears to never get smaller? New tabs will remove the chunks at the end.
 
 ## File Format
 
@@ -38,7 +38,9 @@ Each new tab adds more and more data to the end
    - Numbers 5 and 6 are the X,Y Coordinates in uINT32 of the relation to the bottom right corner from the top left. Essentially giving the window width and height.
  - Delimiter? (0x00)
  - CRC 32 of all the previous bytes starting from the sequence number
-
+ - Slackspace as tabs are removed/closed
+   - Prior CRC32, Coords, partial Active Tab, and partial GUID can be recovered potentially
+   - This data will get super munged over time
 
 
 
