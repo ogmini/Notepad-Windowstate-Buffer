@@ -38,9 +38,8 @@ Each new tab adds more and more data to the end. Closing a tab creates a new chu
    - Numbers 5 and 6 are the X,Y Coordinates in uINT32 of the relation to the bottom right corner from the top left. Essentially giving the window width and height.
  - Delimiter? (0x00)
  - CRC 32 of all the previous bytes starting from the sequence number
- - Unknown bytes added as tabs are removed/closed
-   - Appears to be 13 byte chunks for each tab
-   - 4 byte CRC 32???? Can't find match 
+ - Slackspace as tabs are removed/closed
+   - Prior CRC32, Coords, Active Tab, GUIDs can be recovered potentially
 
 
 
