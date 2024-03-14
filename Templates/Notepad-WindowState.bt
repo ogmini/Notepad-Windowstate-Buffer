@@ -81,8 +81,8 @@ struct FILE {
    ubyte delim;
    uint32 crc32 <format=hex, bgcolor=cLtGray, comment="CRC32 of all preceding bytes starting from the sequenceNumber">;
    
-   if (!FEof())
+   while (!FEof())
    {
-   ubyte slackspace[FileSize() - DecodeUleb128(bytestoCRC32) - 8] <bgcolor=cDkGreen, comment="Slack Space - May contain recoverable information">; 
+   ubyte slackspace <bgcolor=cDkGreen, comment="Slack Space - May contain recoverable information">; 
    }
 } file;
