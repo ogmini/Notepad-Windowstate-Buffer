@@ -3,12 +3,13 @@
 //
 //      File: Notepad-WindowState.bt
 //   Authors: ogmini https://github.com/ogmini
-//   Version: 0.1
+//   Version: 0.2
 //   Purpose: Template to make sense of the Window State file for Windows 11 Notepad
 //  Category: Misc
 // File Mask: *.bin 
 //  ID Bytes: 4E 50 //NP
 //   History: 
+//   0.2   2024-03-14 ogmini: Added slack space. Comments and color improvements.
 //   0.1   2024-03-12 ogmini: Initial version
 //------------------------------------------------
 
@@ -20,7 +21,7 @@ typedef struct {
     do {
         ubyte bytes;
     } while (bytes > 0x7f);
-} Uleb128 <bgcolor=cRed, read=Uleb128ValueToStr>;
+} Uleb128 <read=Uleb128ValueToStr>;
 
 //------------------------------------------------
 //                   Funcs
@@ -46,38 +47,42 @@ string Uleb128ValueToStr(Uleb128 &varint) {
 
 struct FILE {
     struct HEADER {
-        char    type[2];        
+        char    type[2] <comment="ID Bytes">;        
     } header <bgcolor=cLtGray>;
 
-    Uleb128 sequenceNumber;
-    Uleb128 bytestoCRC32;
+    Uleb128 sequenceNumber <bgcolor=cLtRed, comment="Sequence number for file">;
+    Uleb128 bytestoCRC32 <bgcolor=cLtGray, comment="Provides easy way to know start of Slack Space">;
     ubyte delim;
-    Uleb128 numberTabs;
+    Uleb128 numberTabs <bgcolor=cYellow, comment="Number of Tabs Open">;
 
-    struct RECORD {
-        GUID g;
-    } record[DecodeUleb128(file.numberTabs)] <bgcolor=cGreen>;
+    struct TAB {
+        GUID g <comment="GUID of Open Tab">;
+    } tab[DecodeUleb128(file.numberTabs)] <bgcolor=cGreen, comment="Open Tabs in Order">;
     
     
-   Uleb128 activeTab;
-   
+   Uleb128 activeTab <bgcolor=cYellow, comment="Active Tab">;
+      
    struct CoordTopLeft {
           uint32 coordx;
           uint32 coordy;
-       } coordtopleft <bgcolor=cBlue>;
+       } coordtopleft <bgcolor=cBlue, comment="Top Left Coordinate of Window">;
 
    struct CoordBottomRight {
           uint32 coordx;
           uint32 coordy;
-       } coordbottomright <bgcolor=cLtBlue>;
+       } coordbottomright <bgcolor=cLtBlue, comment="Bottom Right Coordinate of Window">;
        
    struct WindowSize {
         uint32 width;
         uint32 height;    
-    } windowsize <bgcolor=cAqua>;
+    } windowsize <bgcolor=cAqua, comment="Dimensions of Window">;
    
     
    ubyte delim;
-   uint32 crc32 <format=hex, bgcolor=cLtGray>;
-
+   uint32 crc32 <format=hex, bgcolor=cLtGray, comment="CRC32 of all preceding bytes starting from the sequenceNumber">;
+   
+   if (!FEof())
+   {
+   ubyte slackspace[FileSize() - DecodeUleb128(bytestoCRC32) - 8] <bgcolor=cDkGreen, comment="Slack Space - May contain recoverable information">; 
+   }
 } file;
