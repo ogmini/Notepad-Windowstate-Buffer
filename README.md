@@ -18,7 +18,12 @@ Please see my other repository for the [Tabstate files](https://github.com/ogmin
 
 ## Overall Behavior
 
-Each new tab adds more and more data to the end. Closing a tab creates a new chunk at the end of the stream. The files appears to never get smaller? New tabs will remove the chunks at the end.
+Adding a tab adds another chunk to the collection of chunks and updates the number of bytes to the CRC32. Any existing slack space in the file will get overwritten up to the end of the new CRC32.
+
+Closing a tab deletes the relevant chunk from the collection and updates the number of bytes to the CRC32. Slack space after the CRC32 may result from closing tabs. The files appears to never get smaller?
+
+The following actions will cause an update of the sequence number and of the file:
+
 
 ## File Format
 
@@ -42,5 +47,6 @@ Each new tab adds more and more data to the end. Closing a tab creates a new chu
    - Prior CRC32, Coords, partial Active Tab, and partial GUID can be recovered potentially
    - This data will get super munged over time
 
+## Attempted Recovery from Slack Space
 
 
