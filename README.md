@@ -49,10 +49,17 @@ The following actions will cause an update of the sequence number and of the fil
    - Prior CRC32, Coords, partial Active Tab, and partial GUID can be recovered potentially
    - This data will get super munged over time
 
-## Attempted Recovery from Slack Space
+## Attempted Parsing of Slack Space
+
+> [!WARNING]  
+> The below approaches make heavy assumptions. As Tabs are opened and closed, the slack space will get more and more convoluted and disarrayed. Manual parsing is suggested and there is no guarantee of being able to recover anything of use. 
 
 ### Approach 1
 
+Approach 1 starts at the end of the slack space and goes backwards looking for 5 byte sequences which could be the 0x00 delimeter and CRC32. An assumption is made that the first byte of the CRC32 cannot also be 0x00. From there, it continues to read backwards attempting to pull out information. One difficulty is that the size of the Active Tab is variable and two assumptions are made for a 1 byte and 2 byte size. 
+
 ### Approach 2
+
+Approach 2 is making the assumption that a user will only ever open/close 1 Tab at a time. It looks at the size of the slack space and reads from the start of the slack space. This method has no chance of recovering a full GUID.  
 
 
