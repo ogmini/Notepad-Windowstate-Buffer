@@ -5,7 +5,7 @@ Reverse engineering and extracting digital artifacts from the Windowstate files 
 Please see my other repository for the [Tabstate files](https://github.com/ogmini/Notepad-Tabstate-Buffer). 
 
 - [010 Editor Binary Template](https://github.com/ogmini/Notepad-Windowstate-Buffer/tree/main/Templates/Notepad-WindowState.bt) - This is also in the 010 Editor online template repository for download as Notepad-WindowState.bt    
-- [imHex Pattern](https://github.com/ogmini/Notepad-Windowstate-Buffer/blob/main/Templates/Notepad-WindowState.hexpat)
+- [ImHex Pattern](https://github.com/ogmini/Notepad-Windowstate-Buffer/blob/main/Templates/Notepad-WindowState.hexpat) - This is also in the [ImHex Database](https://github.com/WerWolv/ImHex-Patterns)    
 
 ## Thanks
 
