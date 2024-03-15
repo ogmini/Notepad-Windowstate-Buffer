@@ -23,6 +23,12 @@ Adding a tab adds another chunk to the collection of chunks and updates the numb
 Closing a tab deletes the relevant chunk from the collection and updates the number of bytes to the CRC32. Slack space after the CRC32 may result from closing tabs. The files appears to never get smaller?
 
 The following actions will cause an update of the sequence number and of the file:
+- Resizing Window
+- Moving Window
+- Reordering Tabs
+- Closing Tab(s)
+  - Closing multiple Tabs at once results in one action 
+- Opening Tab(s)
 
 
 ## File Format
