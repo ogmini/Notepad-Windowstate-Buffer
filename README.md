@@ -1,10 +1,6 @@
-> WORK IN PROGRESS
->
-> What you see here are ever evolving notes and changing code as I investigate the file format.
-
 # Notepad-Windowstate-Buffer
 
-These are my attempts to reverse engineer the Windowstate files for Notepad in Microsoft Windows 11. These files are located at: `%localappdata%\Packages\Microsoft.WindowsNotepad_8wekyb3d8bbwe\LocalState\WindowState`
+Reverse engineering and extracting digital artifacts from the Windowstate files for Notepad in Microsoft Windows 11. These files are located at: `%localappdata%\Packages\Microsoft.WindowsNotepad_8wekyb3d8bbwe\LocalState\WindowState`
 
 Please see my other repository for the [Tabstate files](https://github.com/ogmini/Notepad-Tabstate-Buffer). 
 
@@ -30,7 +26,6 @@ The following actions will cause an update of the sequence number and of the fil
   - Closing multiple Tabs at once results in one action 
 - Opening Tab(s)
 
-
 ## File Format
 
  - First 2 bytes "NP"
@@ -54,5 +49,9 @@ The following actions will cause an update of the sequence number and of the fil
    - This data will get super munged over time
 
 ## Attempted Recovery from Slack Space
+
+### Approach 1
+
+### Approach 2
 
 
