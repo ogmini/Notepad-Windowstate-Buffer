@@ -50,6 +50,22 @@ namespace Notepad_Windowstate_Buffer
             return value;
         }
 
+        public static ulong ReadLEB128Unsigned(this byte[] bytes)
+        {
+            ulong value = 0;
+            var shift = 0;
+
+            foreach (byte b in bytes)
+            {
+                value |= (b & 0x7fUL) << shift;
+                shift += 7;
+                if ((b & 0x80) == 0)
+                    break;
+            }
+
+            return value;
+        }
+
         public static byte[] WriteLEB128Unsigned(ulong value)
         {
             byte[] bArray = new byte[0];
