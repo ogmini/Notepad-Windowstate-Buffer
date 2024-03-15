@@ -4,11 +4,11 @@
 
 # Notepad-Windowstate-Buffer
 
-These are my attempts to reverse engineer the Windowstate files for Notepad in Microsoft Windows 11.. These files are located at: `%localappdata%\Packages\Microsoft.WindowsNotepad_8wekyb3d8bbwe\LocalState\WindowState`
+These are my attempts to reverse engineer the Windowstate files for Notepad in Microsoft Windows 11. These files are located at: `%localappdata%\Packages\Microsoft.WindowsNotepad_8wekyb3d8bbwe\LocalState\WindowState`
 
 Please see my other repository for the [Tabstate files](https://github.com/ogmini/Notepad-Tabstate-Buffer). 
 
-- [010 Editor Binary Template](https://github.com/ogmini/Notepad-Windowstate-Buffer/tree/main/Templates/Notepad-WindowState.bt)
+- [010 Editor Binary Template](https://github.com/ogmini/Notepad-Windowstate-Buffer/tree/main/Templates/Notepad-WindowState.bt) - This is also in the 010 Editor online template repository for download as Notepad-WindowState.bt    
 - [imHex Pattern](https://github.com/ogmini/Notepad-Windowstate-Buffer/blob/main/Templates/Notepad-WindowState.hexpat)
 
 ## Thanks
@@ -18,7 +18,18 @@ Please see my other repository for the [Tabstate files](https://github.com/ogmin
 
 ## Overall Behavior
 
-Each new tab adds more and more data to the end. Closing a tab creates a new chunk at the end of the stream. The files appears to never get smaller? New tabs will remove the chunks at the end.
+Adding a tab adds another chunk to the collection of chunks and updates the number of bytes to the CRC32. Any existing slack space in the file will get overwritten up to the end of the new CRC32.
+
+Closing a tab deletes the relevant chunk from the collection and updates the number of bytes to the CRC32. Slack space after the CRC32 may result from closing tabs. The files appears to never get smaller?
+
+The following actions will cause an update of the sequence number and of the file:
+- Resizing Window
+- Moving Window
+- Reordering Tabs
+- Closing Tab(s)
+  - Closing multiple Tabs at once results in one action 
+- Opening Tab(s)
+
 
 ## File Format
 
@@ -42,5 +53,6 @@ Each new tab adds more and more data to the end. Closing a tab creates a new chu
    - Prior CRC32, Coords, partial Active Tab, and partial GUID can be recovered potentially
    - This data will get super munged over time
 
+## Attempted Recovery from Slack Space
 
 
