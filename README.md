@@ -1,5 +1,8 @@
 # Notepad-Windowstate-Buffer
 
+>[!IMPORTANT]
+>This project is being deprecated and rolled into [Notepad State Library](https://github.com/ogmini/Notepad-State-Library). No updates will be made to this project. All new notes, documentation, and code will be at the new repository. 
+
 Reverse engineering and extracting digital artifacts from the Windowstate files for Notepad in Microsoft Windows 11. These files are located at: `%localappdata%\Packages\Microsoft.WindowsNotepad_8wekyb3d8bbwe\LocalState\WindowState`
 
 Please see my other repository for the [Tabstate files](https://github.com/ogmini/Notepad-Tabstate-Buffer). 
